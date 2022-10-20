@@ -175,24 +175,17 @@ void check(double* x, double* y, double* vx, double* vy )
 
 	for(size_t i = 0; i < NSTEPS; i++){
 
-	if (std::sqrt(1 + E) - std::abs(x[i]*vy[i] - y[i]*vx[i]) > 1e-10){
+	if (std::sqrt(1 + E) - std::abs(x[i]*vy[i] - y[i]*vx[i]) > 1e-10) {
 
 		std::cout << "Angular momentum conservation failed!\n";
 		std::cout << std::sqrt(1 + E) - std::abs(x[i]*vx[i] - y[i]*vy[i] )<< "\n";
-
 	}
 
-
-	if (std::abs(0.5 * (vx[i]*vx[i] + vy[i]*vy[i]) - 1 / (std::sqrt(x[i]*x[i] + y[i]*y[i]))) - std::abs(-(1+E)/(1-E)) > 1e-10)
-
-	{
+	if (std::abs(0.5 * (vx[i]*vx[i] + vy[i]*vy[i]) - 1 / (std::sqrt(x[i]*x[i] + y[i]*y[i]))) - std::abs(-(1+E)/(1-E)) > 1e-10) {
 
 		std::cout << "Energy conservation failed!\n";
-
 	}
-
 	}
-
 
 }
 
@@ -217,8 +210,8 @@ int main(){
 	auto tStartE = std::chrono::high_resolution_clock::now();
 	eEuler(x,y,vx,vy,dt);
 	auto tEndE = std::chrono::high_resolution_clock::now();
-	write(x,y,vx,vy,NSTEPS,(char*) "eEuler.txt");
 	check(x,y,vx,vy);
+	write(x,y,vx,vy,NSTEPS,(char*) "eEuler.txt");
 	auto tExecE = std::chrono::duration<double>(tEndE - tStartE).count();
 
 	// Runge Kutta 2
@@ -227,7 +220,6 @@ int main(){
 	rk2(x,y,vx,vy,dt);
 	auto tEndRK2 = std::chrono::high_resolution_clock::now();
 	check(x,y,vx,vy);
-
 	write(x,y,vx,vy,NSTEPS,(char*) "rk2.txt");
 	auto tExecRK2 = std::chrono::duration<double>(tEndRK2 - tStartRK2).count();
 
