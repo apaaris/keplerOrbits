@@ -170,6 +170,32 @@ void write(double* x, double* y, double* vx, double* vy, size_t nsteps ,char* fi
 
 }
 
+void check(double* x, double* y, double* vx, double* vy )
+{
+
+	for(size_t i = 0; i < NSTEPS; i++){
+
+	if (std::sqrt(1 + E) - std::abs(x[i]*vy[i] - y[i]*vx[i]) > 1e-1){
+
+		std::cout << "Angular momentum conservation failed!\n";
+		std::cout << std::sqrt(1 + E) - std::abs(x[i]*vx[i] - y[i]*vy[i] )<< "\n";
+
+	}
+
+
+	if (std::abs(0.5 * (vx[i]*vx[i] + vy[i]*vy[i]) - 1 / (std::sqrt(x[i]*x[i] + y[i]*y[i]))) - std::abs(-(1+E)/(1-E)) > 1e-1)
+
+	{
+
+		std::cout << "Energy conservation failed!\n";
+
+	}
+
+	}
+
+
+}
+
 int main(){
 	const double dt =  T()/NSTEPS;
 
@@ -192,7 +218,7 @@ int main(){
 	eEuler(x,y,vx,vy,dt);
 	auto tEndE = std::chrono::high_resolution_clock::now();
 	write(x,y,vx,vy,NSTEPS,(char*) "eEuler.txt");
-
+	check(x,y,vx,vy);
 	auto tExecE = std::chrono::duration<double>(tEndE - tStartE).count();
 
 	// Runge Kutta 2
@@ -200,6 +226,7 @@ int main(){
 	auto tStartRK2 = std::chrono::high_resolution_clock::now();
 	rk2(x,y,vx,vy,dt);
 	auto tEndRK2 = std::chrono::high_resolution_clock::now();
+	check(x,y,vx,vy);
 
 	write(x,y,vx,vy,NSTEPS,(char*) "rk2.txt");
 	auto tExecRK2 = std::chrono::duration<double>(tEndRK2 - tStartRK2).count();
@@ -209,6 +236,7 @@ int main(){
 	auto tStartRK4 = std::chrono::high_resolution_clock::now();
 	rk4(x,y,vx,vy,dt);
 	auto tEndRK4 = std::chrono::high_resolution_clock::now();
+	check(x,y,vx,vy);
 	write(x,y,vx,vy,NSTEPS,(char*) "rk4.txt");
 	auto tExecRK4 = std::chrono::duration<double>(tEndRK4 - tStartRK4).count();
 
@@ -217,6 +245,7 @@ int main(){
 	auto tStartSE = std::chrono::high_resolution_clock::now();
 	semiI(x,y,vx,vy,dt);
 	auto tEndSE = std::chrono::high_resolution_clock::now();
+	check(x,y,vx,vy);
 	write(x,y,vx,vy,NSTEPS,(char*) "semiI.txt");
 	auto tExecSE = std::chrono::duration<double>(tEndSE - tStartSE).count();
 
@@ -225,6 +254,7 @@ int main(){
 	auto tStartL = std::chrono::high_resolution_clock::now();
 	leapfrog(x,y,vx,vy,dt);
 	auto tEndL = std::chrono::high_resolution_clock::now();
+	check(x,y,vx,vy);
 	write(x,y,vx,vy,NSTEPS,(char*) "leapfrog.txt");
 	auto tExecL = std::chrono::duration<double>(tEndL - tStartL).count();
 	//28,54,144,28,60
