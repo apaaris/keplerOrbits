@@ -175,7 +175,7 @@ void check(double* x, double* y, double* vx, double* vy )
 
 	for(size_t i = 0; i < NSTEPS; i++){
 
-	if (std::sqrt(1 + E) - std::abs(x[i]*vy[i] - y[i]*vx[i]) > 1e-1){
+	if (std::sqrt(1 + E) - std::abs(x[i]*vy[i] - y[i]*vx[i]) > 1e-10){
 
 		std::cout << "Angular momentum conservation failed!\n";
 		std::cout << std::sqrt(1 + E) - std::abs(x[i]*vx[i] - y[i]*vy[i] )<< "\n";
@@ -183,7 +183,7 @@ void check(double* x, double* y, double* vx, double* vy )
 	}
 
 
-	if (std::abs(0.5 * (vx[i]*vx[i] + vy[i]*vy[i]) - 1 / (std::sqrt(x[i]*x[i] + y[i]*y[i]))) - std::abs(-(1+E)/(1-E)) > 1e-1)
+	if (std::abs(0.5 * (vx[i]*vx[i] + vy[i]*vy[i]) - 1 / (std::sqrt(x[i]*x[i] + y[i]*y[i]))) - std::abs(-(1+E)/(1-E)) > 1e-10)
 
 	{
 
