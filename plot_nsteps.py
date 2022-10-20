@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 def main():
 
-    resolutions = ["1e4","1e5","1e6","1e7"]
+    resolutions = ["1e4","1e5","1e6"]
     functions = ["eEuler", "rk2","rk4","semiI","leapfrog"]
 
     for f in functions:
