@@ -4,7 +4,7 @@
 #include<fstream>
 #include<chrono>
 
-# define E 0.9
+# define E 0.5
 # define NSTEPS 1e5
 
 double T(){
@@ -209,12 +209,14 @@ int main(){
 	char* funNames[5] = {(char*) "eEuler.txt",(char*) "rk2.txt",(char*) "rk4.txt",(char*) "semiI.txt",(char*) "leapfrog.txt"};
 
 
-
 	p[0] = eEuler;
 	p[1] = rk2;
 	p[2] = rk4;
 	p[3] = semiI;
 	p[4] = leapfrog;
+
+
+
 
 	for(size_t i = 0; i < 5; i++){
 		init(x,y,vx,vy);
@@ -226,20 +228,21 @@ int main(){
 		write(x,y,vx,vy,NSTEPS, (char*)funNames[i]);
 
 	}
-
+	std::cout << "----------------------\n";
 	std::cout << "Exec times\n";
 	std::cout <<"E: " << times[0] << "\n";
 	std::cout <<"RK2: " << times[1] << "\n";
 	std::cout <<"RK4: " << times[2] << "\n";
 	std::cout <<"SE: " << times[3] << "\n";
 	std::cout <<"L: " << times[4] << "\n";
-
+	std::cout << "----------------------\n";
 	std::cout << "GFLOps/s\n";
 	std::cout <<"E: " << 28 * NSTEPS / times[0] * 1e-9 << "\n";
 	std::cout <<"RK2: " << 54 * NSTEPS / times[1] * 1e-9 << "\n";
 	std::cout <<"RK4: " << 144 * NSTEPS / times[2] * 1e-9 << "\n";
 	std::cout <<"SE: " << 28 * NSTEPS / times[3] * 1e-9 << "\n";
 	std::cout <<"L: " << 60 * NSTEPS / times[4] * 1e-9 << "\n";
+	std::cout << "----------------------\n";
 
 	free(x);
 	free(y);
