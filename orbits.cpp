@@ -196,6 +196,7 @@ int main(){
 	double *y = (double*) malloc(NSTEPS*sizeof(double));
 	double *vx = (double*) malloc(NSTEPS*sizeof(double));
 	double *vy = (double*) malloc(NSTEPS*sizeof(double));
+	double *times = (double*) malloc(5*sizeof(double));
 
 	for(size_t i = 0; i < NSTEPS; i++){
 	x[i] = 0;
@@ -204,66 +205,41 @@ int main(){
 	vy[i] = 0;
 	}
 
-	// Explicit Euler
+	void (*p[5]) (double* x, double* y, double* vx, double* vy, double dt);
+	char* funNames[5] = {(char*) "eEuler.txt",(char*) "rk2.txt",(char*) "rk4.txt",(char*) "semiI.txt",(char*) "leapfrog.txt"};
 
-	init(x,y,vx,vy);
-	auto tStartE = std::chrono::high_resolution_clock::now();
-	eEuler(x,y,vx,vy,dt);
-	auto tEndE = std::chrono::high_resolution_clock::now();
-	check(x,y,vx,vy);
-	write(x,y,vx,vy,NSTEPS,(char*) "eEuler.txt");
-	auto tExecE = std::chrono::duration<double>(tEndE - tStartE).count();
 
-	// Runge Kutta 2
-	init(x,y,vx,vy);
-	auto tStartRK2 = std::chrono::high_resolution_clock::now();
-	rk2(x,y,vx,vy,dt);
-	auto tEndRK2 = std::chrono::high_resolution_clock::now();
-	check(x,y,vx,vy);
-	write(x,y,vx,vy,NSTEPS,(char*) "rk2.txt");
-	auto tExecRK2 = std::chrono::duration<double>(tEndRK2 - tStartRK2).count();
 
-	// Runge Kutta 4
-	init(x,y,vx,vy);
-	auto tStartRK4 = std::chrono::high_resolution_clock::now();
-	rk4(x,y,vx,vy,dt);
-	auto tEndRK4 = std::chrono::high_resolution_clock::now();
-	check(x,y,vx,vy);
-	write(x,y,vx,vy,NSTEPS,(char*) "rk4.txt");
-	auto tExecRK4 = std::chrono::duration<double>(tEndRK4 - tStartRK4).count();
+	p[0] = eEuler;
+	p[1] = rk2;
+	p[2] = rk4;
+	p[3] = semiI;
+	p[4] = leapfrog;
 
-	// Semi Implicit Euler
-	init(x,y,vx,vy);
-	auto tStartSE = std::chrono::high_resolution_clock::now();
-	semiI(x,y,vx,vy,dt);
-	auto tEndSE = std::chrono::high_resolution_clock::now();
-	check(x,y,vx,vy);
-	write(x,y,vx,vy,NSTEPS,(char*) "semiI.txt");
-	auto tExecSE = std::chrono::duration<double>(tEndSE - tStartSE).count();
+	for(size_t i = 0; i < 5; i++){
+		init(x,y,vx,vy);
+		auto tStart = std::chrono::high_resolution_clock::now();
+		(*p[i]) (x,y,vx,vy,dt);
+		auto tEnd = std::chrono::high_resolution_clock::now();
+		check(x,y,vx,vy);
+	        times[i] = std::chrono::duration<double>(tEnd - tStart).count();
+		write(x,y,vx,vy,NSTEPS, (char*)funNames[i]);
 
-	// Leapfrog
-	init(x,y,vx,vy);
-	auto tStartL = std::chrono::high_resolution_clock::now();
-	leapfrog(x,y,vx,vy,dt);
-	auto tEndL = std::chrono::high_resolution_clock::now();
-	check(x,y,vx,vy);
-	write(x,y,vx,vy,NSTEPS,(char*) "leapfrog.txt");
-	auto tExecL = std::chrono::duration<double>(tEndL - tStartL).count();
-	//28,54,144,28,60
-	/*
+	}
+
 	std::cout << "Exec times\n";
-	std::cout <<"E: " <<tExecE << "\n";
-	std::cout <<"RK2: " << tExecRK2 << "\n";
-	std::cout <<"RK4: " << tExecRK4 << "\n";
-	std::cout <<"SE: " << tExecSE << "\n";
-	std::cout <<"L: " <<tExecL << "\n";
-	*/
+	std::cout <<"E: " << times[0] << "\n";
+	std::cout <<"RK2: " << times[1] << "\n";
+	std::cout <<"RK4: " << times[2] << "\n";
+	std::cout <<"SE: " << times[3] << "\n";
+	std::cout <<"L: " << times[4] << "\n";
+
 	std::cout << "GFLOps/s\n";
-	std::cout <<"E: " << 28 * NSTEPS / tExecE * 1e-9 << "\n";
-	std::cout <<"RK2: " << 54 * NSTEPS / tExecRK2 * 1e-9 << "\n";
-	std::cout <<"RK4: " << 144 * NSTEPS / tExecRK4 * 1e-9 << "\n";
-	std::cout <<"SE: " << 28 * NSTEPS / tExecSE * 1e-9 << "\n";
-	std::cout <<"L: " << 60 * NSTEPS / tExecL * 1e-9 << "\n";
+	std::cout <<"E: " << 28 * NSTEPS / times[0] * 1e-9 << "\n";
+	std::cout <<"RK2: " << 54 * NSTEPS / times[1] * 1e-9 << "\n";
+	std::cout <<"RK4: " << 144 * NSTEPS / times[2] * 1e-9 << "\n";
+	std::cout <<"SE: " << 28 * NSTEPS / times[3] * 1e-9 << "\n";
+	std::cout <<"L: " << 60 * NSTEPS / times[4] * 1e-9 << "\n";
 
 	free(x);
 	free(y);
