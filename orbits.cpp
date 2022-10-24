@@ -4,9 +4,9 @@
 #include<fstream>
 #include<chrono>
 
-# define E 0.9
+# define E 0.5
 # define NSTEPS 1e4
-# define folder "ec9"
+# define folder "1e4"
 double T(){
 
 	return std::pow((2.0 * M_PI) / (1.0 - E), (3.0 / 2.0));
@@ -176,6 +176,8 @@ void write(double* x, double* y, double* vx, double* vy, size_t nsteps ,char* fi
 void check(double* x, double* y, double* vx, double* vy )
 {
 
+	std::ofstream outfile ((std::string) folder+"/EM.txt");
+	outfile << "E M\n";
 	for(size_t i = 0; i < NSTEPS; i++){
 
 	if (std::sqrt(1 + E) - std::abs(x[i]*vy[i] - y[i]*vx[i]) > 1e-10) {
@@ -188,6 +190,7 @@ void check(double* x, double* y, double* vx, double* vy )
 
 		std::cout << "Energy conservation failed!\n";
 	}
+		outfile << std::abs(0.5 * (1+E) - 1 / (std::sqrt(x[i]*x[i] + y[i]*y[i]))) - std::abs(-(1+E)/(1-E)) << " " << std::sqrt(1 + E) - std::abs(x[i]*vx[i] - y[i]*vy[i] )<< "\n";
 	}
 
 }
@@ -230,7 +233,7 @@ int main(){
 		auto tEnd = std::chrono::high_resolution_clock::now();
 		check(x,y,vx,vy);
 	        times[i] = std::chrono::duration<double>(tEnd - tStart).count();
-		write(x, y, vx, vy, NSTEPS, (char*)funNames[i]);
+		//write(x, y, vx, vy, NSTEPS, (char*)funNames[i]);
 
 	}
 
@@ -249,6 +252,23 @@ int main(){
 	std::cout <<"SE: " << 28 * NSTEPS / times[3] * 1e-9 << "\n";
 	std::cout <<"L: " << 60 * NSTEPS / times[4] * 1e-9 << "\n";
 	std::cout << "----------------------\n";
+
+	std::ofstream outfile ((std::string) folder + "/benchmark.txt");
+
+	if (outfile.is_open())
+	{
+	outfile << "GFlops\n";
+
+	outfile << "E " << 28 * NSTEPS / times[0] * 1e-9 << "\n";
+	outfile << "RK2 " << 54 * NSTEPS / times[1] * 1e-9 << "\n";
+	outfile << "RK4 " << 144 * NSTEPS / times[2] * 1e-9 << "\n";
+	outfile << "SE " << 28 * NSTEPS / times[3] * 1e-9 << "\n";
+	outfile << "L " << 28 * NSTEPS / times[4] * 1e-9 << "\n";
+
+
+	outfile.close();
+	}
+	else std::cout << "Unable to open file";
 
 	free(x);
 	free(y);

@@ -73,6 +73,6 @@
 <details>
   <summary>GFLOPs/s</summary>
 
-#![Benchmark](/plots/benchmark_plot.png "Benchmark")
+![Benchmark](/plots/benchmark_plot.png "Benchmark")
 
 </details>

@@ -1,13 +1,14 @@
 #!/usr/bin/python3
 
+import csv
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
 def main():
 
-    nsteps = ['1e4','1e5','1e6']
-    values =  [1e4,1e5,1e6]
+    nsteps = ['1e2','1e3','1e4','1e5','1e6']
+    values =  [1e2,1e3,1e4,1e5,1e6]
     functions = ["eEuler", "rk2","rk4","semiI","leapfrog"]
 
     gFlopE = []
@@ -22,9 +23,18 @@ def main():
 
 
     for step in nsteps:
-        for i in range(len(ar_data)):
-            data = pd.read_csv("%s/benchmark.txt"%(step),sep=' ')
-            ar_data[i].append(data[functions[i]])
+        bFile = open('%s/benchmark.txt'%(step))
+        csvreader = csv.reader(bFile,delimiter=' ')
+
+        header = []
+        header = next(csvreader)
+
+        rows = []
+        count = 0
+        for row in csvreader:
+            rows.append(row)
+            ar_data[count].append(row[1])
+            count += 1
 
     for i in range(len(ar_data)):
         plt.loglog(values,ar_data[i],label=functions[i])
