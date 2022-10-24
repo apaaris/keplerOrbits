@@ -5,11 +5,11 @@
 <details>
 <summary>For changing step size 1e3 -> 1000 steps</summary>
 
-[Varying nsteps](/plots/1e2_plot.png "1e2")
-[Varying nsteps](/plots/1e3_plot.png "1e3")
-[Varying nsteps](/plots/1e4_plot.png "1e4")
-[Varying nsteps](/plots/1e5_plot.png "1e5")
-[Varying nsteps](/plots/1e6_plot.png "1e6")
+![Varying nsteps](/plots/1e2_plot.png "1e2")
+![Varying nsteps](/plots/1e3_plot.png "1e3")
+![Varying nsteps](/plots/1e4_plot.png "1e4")
+![Varying nsteps](/plots/1e5_plot.png "1e5")
+![Varying nsteps](/plots/1e6_plot.png "1e6")
 
 </details>
 
