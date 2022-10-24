@@ -5,8 +5,8 @@
 #include<chrono>
 
 # define E 0.5
-# define NSTEPS 1e5
-
+# define NSTEPS 1e6
+# define folder "1e6"
 double T(){
 
 	return std::pow((2.0 * M_PI) / (1.0 - E), (3.0 / 2.0));
@@ -34,8 +34,8 @@ void eEuler (double* x, double* y, double* vx, double* vy, double dt){
 		x[i+1] = x[i] + vx[i] * dt;
 		y[i+1] = y[i] + vy[i] * dt;
 
-		vx[i+1] = vx[i] + fx(x[i+1],y[i+1]) * dt;
-		vy[i+1] = vy[i] + fy(x[i+1],y[i+1]) * dt;
+		vx[i+1] = vx[i] + fx(x[i],y[i]) * dt;
+		vy[i+1] = vy[i] + fy(x[i],y[i]) * dt;
 	}
 
 	// FLOp:
@@ -50,6 +50,7 @@ void rk2 (double * x, double * y, double * vx, double * vy, double dt){
 	double k1x, k1y;
 
 	for(size_t i = 0; i < NSTEPS; i++){
+
 		k1x = dt * fx(x[i], y[i]) / 2.0;
 		k1y = dt * fy(x[i], y[i]) / 2.0;
 
@@ -155,7 +156,9 @@ void init (double* &x, double* &y, double* &vx, double* &vy){
 void write(double* x, double* y, double* vx, double* vy, size_t nsteps ,char* filename){
 
 
-  std::ofstream outfile (filename);
+  std::ofstream outfile ((std::string) folder+"/" + (std::string) (filename));
+  std::cout << "Path: " << (std::string) folder +"/" + (std::string) (filename) << "\n";
+
   if (outfile.is_open())
   {
     outfile << "nsteps X Y Vx Vy\n";
@@ -181,7 +184,7 @@ void check(double* x, double* y, double* vx, double* vy )
 		std::cout << std::sqrt(1 + E) - std::abs(x[i]*vx[i] - y[i]*vy[i] )<< "\n";
 	}
 
-	if (std::abs(0.5 * (vx[i]*vx[i] + vy[i]*vy[i]) - 1 / (std::sqrt(x[i]*x[i] + y[i]*y[i]))) - std::abs(-(1+E)/(1-E)) > 1e-10) {
+	if (std::abs(0.5 * (1+E) - 1 / (std::sqrt(x[i]*x[i] + y[i]*y[i]))) - std::abs(-(1+E)/(1-E)) > 1e-10) {
 
 		std::cout << "Energy conservation failed!\n";
 	}
@@ -190,6 +193,8 @@ void check(double* x, double* y, double* vx, double* vy )
 }
 
 int main(){
+
+
 	const double dt =  T()/NSTEPS;
 
 	double *x = (double*) malloc(NSTEPS*sizeof(double));
@@ -198,7 +203,7 @@ int main(){
 	double *vy = (double*) malloc(NSTEPS*sizeof(double));
 	double *times = (double*) malloc(5*sizeof(double));
 
-	for(size_t i = 0; i < NSTEPS; i++){
+	for(int i = 0; i < NSTEPS; i++){
 	x[i] = 0;
 	y[i] = 0;
 	vx[i] = 0;
@@ -225,9 +230,10 @@ int main(){
 		auto tEnd = std::chrono::high_resolution_clock::now();
 		check(x,y,vx,vy);
 	        times[i] = std::chrono::duration<double>(tEnd - tStart).count();
-		write(x,y,vx,vy,NSTEPS, (char*)funNames[i]);
+		write(x, y, vx, vy, NSTEPS, (char*)funNames[i]);
 
 	}
+
 	std::cout << "----------------------\n";
 	std::cout << "Exec times\n";
 	std::cout <<"E: " << times[0] << "\n";
@@ -248,7 +254,6 @@ int main(){
 	free(y);
 	free(vx);
 	free(vy);
-
 
 return 0;
 }

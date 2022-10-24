@@ -1,2 +1,0 @@
-eEuler rk2 rk4 semiI leapfrog
-0.910264 2.20297 3.10009 1.30017 2.3502
