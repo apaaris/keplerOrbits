@@ -16,15 +16,15 @@
 <details>
 <summary>For changing eccentricity ec1 -> 0.1 eccentricity for 1e4 steps</summary>
 
-![Varying eccentricity](/plots/ec_plots_ec1.png "ec1")
-![Varying eccentricity](/plots/ec_plots_ec2.png "ec2")
-![Varying eccentricity](/plots/ec_plots_ec3.png "ec3")
-![Varying eccentricity](/plots/ec_plots_ec4.png "ec4")
-![Varying eccentricity](/plots/ec_plots_ec5.png "ec5")
-![Varying eccentricity](/plots/ec_plots_ec6.png "ec6")
-![Varying eccentricity](/plots/ec_plots_ec7.png "ec7")
-![Varying eccentricity](/plots/ec_plots_ec8.png "ec8")
-![Varying eccentricity](/plots/ec_plots_ec9.png "ec9")
+![Varying eccentricity](/plots/ec1_plot.png "ec1")
+![Varying eccentricity](/plots/ec2_plot.png "ec2")
+![Varying eccentricity](/plots/ec3_plot.png "ec3")
+![Varying eccentricity](/plots/ec4_plot.png "ec4")
+![Varying eccentricity](/plots/ec5_plot.png "ec5")
+![Varying eccentricity](/plots/ec6_plot.png "ec6")
+![Varying eccentricity](/plots/ec7_plot.png "ec7")
+![Varying eccentricity](/plots/ec8_plot.png "ec8")
+![Varying eccentricity](/plots/ec9_plot.png "ec9")
 </details>
 
 
