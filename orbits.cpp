@@ -5,8 +5,9 @@
 #include<chrono>
 
 # define E 0.5
-# define NSTEPS 1e4
-# define folder "1e4"
+# define NSTEPS 1e6
+# define folder "1e6"
+
 double T(){
 
 	return std::pow((2.0 * M_PI) / (1.0 - E), (3.0 / 2.0));
@@ -173,10 +174,10 @@ void write(double* x, double* y, double* vx, double* vy, size_t nsteps ,char* fi
 
 }
 
-void check(double* x, double* y, double* vx, double* vy )
+void check(double* x, double* y, double* vx, double* vy, char* funName)
 {
 
-	std::ofstream outfile ((std::string) folder+"/EM.txt");
+	std::ofstream outfile ((std::string) folder+"/"+(std::string) funName +"_EM.txt");
 	outfile << "E M\n";
 	for(size_t i = 0; i < NSTEPS; i++){
 
@@ -231,7 +232,7 @@ int main(){
 		auto tStart = std::chrono::high_resolution_clock::now();
 		(*p[i]) (x,y,vx,vy,dt);
 		auto tEnd = std::chrono::high_resolution_clock::now();
-		check(x,y,vx,vy);
+		check(x,y,vx,vy, (char*)funNames[i]);
 	        times[i] = std::chrono::duration<double>(tEnd - tStart).count();
 		//write(x, y, vx, vy, NSTEPS, (char*)funNames[i]);
 

@@ -76,3 +76,11 @@
 ![Benchmark](/plots/benchmark_plot.png "Benchmark")
 
 </details>
+<details>
+  <summary>Energy and Momentum delta</summary>
+
+![Benchmark](/plots/plot_E.png "E")
+![Benchmark](/plots/plot_M.png "M")
+</details>
+
+
