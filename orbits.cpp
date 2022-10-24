@@ -4,9 +4,9 @@
 #include<fstream>
 #include<chrono>
 
-# define E 0.5
-# define NSTEPS 1e6
-# define folder "1e6"
+# define E 0.9
+# define NSTEPS 1e4
+# define folder "ec9"
 double T(){
 
 	return std::pow((2.0 * M_PI) / (1.0 - E), (3.0 / 2.0));
