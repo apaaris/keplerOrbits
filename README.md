@@ -37,7 +37,7 @@
 
 </details>
 <details>
-  <summary>Energy and Momentum delta</summary>
+  <summary>Energy and Momentum delta for 1e4 steps</summary>
 
 ![Benchmark](/plots/plot_E.png "E")
 ![Benchmark](/plots/plot_M.png "M")
