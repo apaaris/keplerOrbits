@@ -4,6 +4,7 @@
 
 <details>
 <summary>For changing step size 1e3 -> 1000 steps</summary>
+
 [Varying nsteps](/plots/1e2_plot.png "1e2")
 [Varying nsteps](/plots/1e3_plot.png "1e3")
 [Varying nsteps](/plots/1e4_plot.png "1e4")
