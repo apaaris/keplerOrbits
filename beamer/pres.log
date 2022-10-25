@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Debian) (preloaded format=xelatex 2021.12.3)  25 OCT 2022 12:10
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Debian) (preloaded format=xelatex 2021.12.3)  25 OCT 2022 12:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -853,39 +853,39 @@ LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <8> not available
 (Font)              Font shape `TU/lmss/m/sl' tried instead on input line 27.
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <6> not available
 (Font)              Font shape `TU/lmss/m/sl' tried instead on input line 27.
-File: plots/1e2_plot.png Graphic file (type bmp)
-<plots/1e2_plot.png>
-File: plots/1e3_plot.png Graphic file (type bmp)
-<plots/1e3_plot.png>
-File: plots/1e4_plot.png Graphic file (type bmp)
-<plots/1e4_plot.png>
-File: plots/1e5_plot.png Graphic file (type bmp)
-<plots/1e5_plot.png>
+File: ../plots/1e2_plot.png Graphic file (type bmp)
+<../plots/1e2_plot.png>
+File: ../plots/1e3_plot.png Graphic file (type bmp)
+<../plots/1e3_plot.png>
+File: ../plots/1e4_plot.png Graphic file (type bmp)
+<../plots/1e4_plot.png>
+File: ../plots/1e5_plot.png Graphic file (type bmp)
+<../plots/1e5_plot.png>
  [2
 
 ]
-File: plots/ec1_plot.png Graphic file (type bmp)
-<plots/ec1_plot.png>
-File: plots/ec6_plot.png Graphic file (type bmp)
-<plots/ec6_plot.png>
-File: plots/ec8_plot.png Graphic file (type bmp)
-<plots/ec8_plot.png>
-File: plots/ec9_plot.png Graphic file (type bmp)
-<plots/ec9_plot.png>
+File: ../plots/ec1_plot.png Graphic file (type bmp)
+<../plots/ec1_plot.png>
+File: ../plots/ec6_plot.png Graphic file (type bmp)
+<../plots/ec6_plot.png>
+File: ../plots/ec8_plot.png Graphic file (type bmp)
+<../plots/ec8_plot.png>
+File: ../plots/ec9_plot.png Graphic file (type bmp)
+<../plots/ec9_plot.png>
  [3
 
 ] [4
 
 ]
-File: plots/plot_M.png Graphic file (type bmp)
-<plots/plot_M.png>
-File: plots/plot_E.png Graphic file (type bmp)
-<plots/plot_E.png>
+File: ../plots/plot_M.png Graphic file (type bmp)
+<../plots/plot_M.png>
+File: ../plots/plot_E.png Graphic file (type bmp)
+<../plots/plot_E.png>
  [5
 
 ]
-File: plots/benchmark_plot.png Graphic file (type bmp)
-<plots/benchmark_plot.png>
+File: ../plots/benchmark_plot.png Graphic file (type bmp)
+<../plots/benchmark_plot.png>
 
 [6
 
@@ -913,8 +913,8 @@ LaTeX Warning: There were multiply-defined labels.
  ) 
 Here is how much of TeX's memory you used:
  20865 strings out of 479819
- 379143 string characters out of 5895846
- 627315 words of memory out of 5000000
+ 379311 string characters out of 5895846
+ 627333 words of memory out of 5000000
  37536 multiletter control sequences out of 15000+600000
  537423 words of font info for 52 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
