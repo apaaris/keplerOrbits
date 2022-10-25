@@ -32,6 +32,7 @@ void eEuler (double* x, double* y, double* vx, double* vy, double dt){
 
 
 	for(size_t i = 0; i < NSTEPS; i++){
+
 		x[i+1] = x[i] + vx[i] * dt;
 		y[i+1] = y[i] + vy[i] * dt;
 
@@ -76,6 +77,7 @@ void rk4 (double * x, double * y, double * vx, double * vy, double dt){
 	double k1vy,k1ry,k2vy,k2ry,k3vy,k3ry,k4vy,k4ry;
 
 	for(size_t i = 0; i < NSTEPS; i++){
+
 		k1vx = fx(x[i],y[i]);
 		k1rx = vx[i];
 		k2vx = fx(x[i] + (dt/2) * k1rx, y[i]);
@@ -112,11 +114,12 @@ void rk4 (double * x, double * y, double * vx, double * vy, double dt){
 void semiI (double * x, double * y, double * vx, double * vy, double dt){
 
 	for(size_t i = 0; i < NSTEPS; i++){
-	vx[i+1] = vx[i] + fx(x[i],y[i]) * dt;
-        vy[i+1] = vy[i] + fy(x[i],y[i]) * dt;
 
-	x[i+1] = x[i] + vx[i+1] * dt;
-        y[i+1] = y[i] + vy[i+1] * dt;
+		vx[i+1] = vx[i] + fx(x[i],y[i]) * dt;
+		vy[i+1] = vy[i] + fy(x[i],y[i]) * dt;
+
+		x[i+1] = x[i] + vx[i+1] * dt;
+		y[i+1] = y[i] + vy[i+1] * dt;
 	}
 
 	// FLOp:
@@ -130,8 +133,10 @@ void semiI (double * x, double * y, double * vx, double * vy, double dt){
 void leapfrog (double * x, double * y, double * vx, double * vy, double dt){
 
 	for(size_t i = 0; i < NSTEPS; i++){
+
 		x[i+1] = x[i] + vx[i] * dt + vx[i] * 0.5 * dt * dt;
 		y[i+1] = y[i] + vy[i] * dt + vy[i] * 0.5 * dt * dt;
+
 		vx[i+1] = vx[i] + (fx(x[i],y[i]) + fx(x[i+1],y[i+1]))*0.5*dt;
 		vy[i+1] = vy[i] + (fy(x[i],y[i]) + fy(x[i+1],y[i+1]))*0.5*dt;
 	}
@@ -157,19 +162,22 @@ void init (double* &x, double* &y, double* &vx, double* &vy){
 void write(double* x, double* y, double* vx, double* vy, size_t nsteps ,char* filename){
 
 
-  std::ofstream outfile ((std::string) folder+"/" + (std::string) (filename));
-  std::cout << "Path: " << (std::string) folder +"/" + (std::string) (filename) << "\n";
+	std::ofstream outfile ((std::string) folder+"/" + (std::string) (filename));
+	std::cout << "Path: " << (std::string) folder +"/" + (std::string) (filename) << "\n";
 
-  if (outfile.is_open())
-  {
-    outfile << "nsteps X Y Vx Vy\n";
+	if (outfile.is_open()) {
 
-    for(size_t i = 0; i < nsteps; i++){
-        outfile << nsteps <<" " << x[i] << " " << y[i] << " " << vx[i] << " " << vy[i] << "\n";
-    }
-    outfile.close();
-  }
-  else std::cout << "Unable to open file";
+		outfile << "nsteps X Y Vx Vy\n";
+
+		for(size_t i = 0; i < nsteps; i++){
+
+			outfile << nsteps <<" " << x[i] << " " << y[i] << " " << vx[i] << " " << vy[i] << "\n";
+		}
+
+		outfile.close();
+	}
+
+	else std::cout << "Unable to open file";
 
 
 }
@@ -181,16 +189,17 @@ void check(double* x, double* y, double* vx, double* vy, char* funName)
 	outfile << "E M\n";
 	for(size_t i = 0; i < NSTEPS; i++){
 
-	if (std::sqrt(1 + E) - std::abs(x[i]*vy[i] - y[i]*vx[i]) > 1e-10) {
+		if (std::sqrt(1 + E) - std::abs(x[i]*vy[i] - y[i]*vx[i]) > 1e-10) {
 
-		std::cout << "Angular momentum conservation failed!\n";
-		std::cout << std::sqrt(1 + E) - std::abs(x[i]*vx[i] - y[i]*vy[i] )<< "\n";
-	}
+			std::cout << "Angular momentum conservation failed!\n";
+			std::cout << std::sqrt(1 + E) - std::abs(x[i]*vx[i] - y[i]*vy[i] )<< "\n";
+		}
 
-	if (std::abs(0.5 * (1+E) - 1 / (std::sqrt(x[i]*x[i] + y[i]*y[i]))) - std::abs(-(1+E)/(1-E)) > 1e-10) {
+		if (std::abs(0.5 * (1+E) - 1 / (std::sqrt(x[i]*x[i] + y[i]*y[i]))) - std::abs(-(1+E)/(1-E)) > 1e-10) {
 
-		std::cout << "Energy conservation failed!\n";
-	}
+			std::cout << "Energy conservation failed!\n";
+		}
+
 		outfile << std::abs(0.5 * (1+E) - 1 / (std::sqrt(x[i]*x[i] + y[i]*y[i]))) - std::abs(-(1+E)/(1-E)) << " " << std::sqrt(1 + E) - std::abs(x[i]*vx[i] - y[i]*vy[i] )<< "\n";
 	}
 
@@ -208,10 +217,11 @@ int main(){
 	double *times = (double*) malloc(5*sizeof(double));
 
 	for(int i = 0; i < NSTEPS; i++){
-	x[i] = 0;
-	y[i] = 0;
-	vx[i] = 0;
-	vy[i] = 0;
+
+		x[i] = 0;
+		y[i] = 0;
+		vx[i] = 0;
+		vy[i] = 0;
 	}
 
 	void (*p[5]) (double* x, double* y, double* vx, double* vy, double dt);
@@ -227,14 +237,15 @@ int main(){
 
 
 
-	for(size_t i = 0; i < 5; i++){
+	for(size_t i = 0; i < 5; i++) {
+
 		init(x,y,vx,vy);
 		auto tStart = std::chrono::high_resolution_clock::now();
 		(*p[i]) (x,y,vx,vy,dt);
 		auto tEnd = std::chrono::high_resolution_clock::now();
 		check(x,y,vx,vy, (char*)funNames[i]);
 	        times[i] = std::chrono::duration<double>(tEnd - tStart).count();
-		//write(x, y, vx, vy, NSTEPS, (char*)funNames[i]);
+		write(x, y, vx, vy, NSTEPS, (char*)funNames[i]);
 
 	}
 
@@ -256,19 +267,18 @@ int main(){
 
 	std::ofstream outfile ((std::string) folder + "/benchmark.txt");
 
-	if (outfile.is_open())
-	{
-	outfile << "GFlops\n";
+	if (outfile.is_open()) {
 
-	outfile << "E " << 28 * NSTEPS / times[0] * 1e-9 << "\n";
-	outfile << "RK2 " << 54 * NSTEPS / times[1] * 1e-9 << "\n";
-	outfile << "RK4 " << 144 * NSTEPS / times[2] * 1e-9 << "\n";
-	outfile << "SE " << 28 * NSTEPS / times[3] * 1e-9 << "\n";
-	outfile << "L " << 28 * NSTEPS / times[4] * 1e-9 << "\n";
+		outfile << "GFlops\n";
+		outfile << "E " << 28 * NSTEPS / times[0] * 1e-9 << "\n";
+		outfile << "RK2 " << 54 * NSTEPS / times[1] * 1e-9 << "\n";
+		outfile << "RK4 " << 144 * NSTEPS / times[2] * 1e-9 << "\n";
+		outfile << "SE " << 28 * NSTEPS / times[3] * 1e-9 << "\n";
+		outfile << "L " << 28 * NSTEPS / times[4] * 1e-9 << "\n";
 
-
-	outfile.close();
+		outfile.close();
 	}
+
 	else std::cout << "Unable to open file";
 
 	free(x);
